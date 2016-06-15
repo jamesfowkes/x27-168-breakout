@@ -3,8 +3,6 @@
 
 #include "x27.h"
 
-void run_pwm() {}
-
 static void run_dmc()
 {
 	// Mode selection is tricky
