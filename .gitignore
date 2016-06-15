@@ -27,3 +27,8 @@
 *.exe
 *.out
 *.app
+
+# KiCAD backups and caches
+*.kicad_pcb-bak
+**/gerbers/*
+PCB/**/*.bak
