@@ -31,6 +31,7 @@ void run_adc()
 			s_new_reading_ready = false;
 		}
 	}
+	x27_service();
 }
 
 ISR(ADC_vect)

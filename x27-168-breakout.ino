@@ -3,21 +3,43 @@
 
 #include "x27.h"
 
+enum mode
+{
+	MODE_SPI,
+	MODE_SERIAL,
+	MODE_PWM,
+	MODE_ADC
+}
+
 static void run_dmc()
 {
 	// Mode selection is tricky
 }
 
+static void get_mode()
+{
+	// Mode 0 pin is PD1
+	// Mode 1 pin is PD2
+
+	// Mode pins as input
+	DDRD &= ~(_BV(DDD1) | _BV(DDD2));
+	// with pullup
+	PORTD |= _BV(PORTD1) | _BV(PORTD2);
+
+	__delay_ms(30); // Let the pin voltage stabilise after turning on pullups
+	return (enum mode)( (PIND & 0x02) | (PIND & 0x04));
+}
+
 static void signal_fault()
 {
-	DDRB |= _BV(DDB2);
+	DDRC |= _BV(DDC2);
 
 	while(true)	
 	{
 		_delay_ms(200);
-		PINB |= _BV(PINB2);
+		PINC |= _BV(PINC2);
 		_delay_ms(200);
-		PINB |= _BV(PINB2);
+		PINC |= _BV(PINC2);
 	}
 }
 
@@ -26,24 +48,19 @@ void setup()
 
 	x27_initialise();
 
-	// Mode pins as input, no pullup
-	DDRB &= ~(_BV(DDB0) | _BV(DDB1));
-	PORTB &= ~(_BV(PORTB0) | _BV(PORTB1));
-
-	int mode = (PINB & 0x01) & (PINB & 0x02);
-
+	
 	switch(mode)
 	{
-	case 0:
+	case MODE_ADC:
 		run_adc();
 		break;
-	case 1:
+	case MODE_SERIAL:
 		run_serial();
 		break;
-	case 2:
+	case MODE_SPI:
 		run_spi();
 		break;
-	case 3:
+	case MODE_PWM:
 		run_pwm();
 		break;
 	default:

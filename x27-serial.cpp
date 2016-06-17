@@ -53,6 +53,7 @@ void run_serial()
 			s_buffer_index = 0;
 			s_new_command_ready = false;
 		}
+		x27_service();
 	}
 }
 

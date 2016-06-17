@@ -30,6 +30,7 @@ void run_pwm()
 			x27_set_position(&cmd);
 			s_new_reading_ready = false;
 		}
+		x27_service();
 	}
 }
 
