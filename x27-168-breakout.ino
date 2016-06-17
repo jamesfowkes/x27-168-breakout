@@ -9,14 +9,14 @@ enum mode
 	MODE_SERIAL,
 	MODE_PWM,
 	MODE_ADC
-}
+};
 
 static void run_dmc()
 {
 	// Mode selection is tricky
 }
 
-static void get_mode()
+static int get_mode()
 {
 	// Mode 0 pin is PD1
 	// Mode 1 pin is PD2
@@ -26,7 +26,7 @@ static void get_mode()
 	// with pullup
 	PORTD |= _BV(PORTD1) | _BV(PORTD2);
 
-	__delay_ms(30); // Let the pin voltage stabilise after turning on pullups
+	_delay_ms(30); // Let the pin voltage stabilise after turning on pullups
 	return (enum mode)( (PIND & 0x02) | (PIND & 0x04));
 }
 
@@ -48,6 +48,7 @@ void setup()
 
 	x27_initialise();
 
+	int mode = get_mode();
 	
 	switch(mode)
 	{

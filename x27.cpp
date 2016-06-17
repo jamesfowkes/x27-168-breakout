@@ -1,12 +1,16 @@
+#include <avr/io.h>
+
+#include "x27.h"
+
 #define COIL1A_PORT PORTD
 #define COIL1B_PORT PORTD
 #define COIL2A_PORT PORTC
 #define COIL2B_PORT PORTC
 
-#define COIL1A_DDR DDD
-#define COIL1B_DDR DDD
-#define COIL2A_DDR DDC
-#define COIL2B_DDR DDC
+#define COIL1A_DDR DDRD
+#define COIL1B_DDR DDRD
+#define COIL2A_DDR DDRC
+#define COIL2B_DDR DDRC
 
 enum coil_polarity
 {
@@ -52,10 +56,23 @@ static inline void coil2(enum coil_polarity pol)
 	}
 }
 
+static inline int clip_steps(int steps)
+{
+	steps = (steps > MAX_STEPS) ? MAX_STEPS : steps;
+	steps = (steps < 0) ? 0 : steps;
+	return steps;
+}
+
+static inline int clip_percent(int steps)
+{
+	steps = (steps > 100) ? 100 : steps;
+	steps = (steps < 0) ? 0 : steps;
+	return steps;
+}
+
 static inline int percent_to_steps(int percent)
 {
-	percent = min(percent, 100);
-	percent = max(percent, 0);
+	percent = clip_percent(percent);
 	return percent * 6;
 }
 
@@ -113,7 +130,7 @@ void x27_set_position(struct position_command const * const cmd)
 		target = percent_to_steps(cmd->position);
 		break;
 	case POSITION_TYPE_STEPS:
-		target = max(0, cmd->position);
+		target = clip_steps(cmd->position);
 		break;
 	default:
 		return;

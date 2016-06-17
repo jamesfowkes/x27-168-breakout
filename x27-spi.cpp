@@ -20,7 +20,11 @@ static void setup()
 
 void run_spi()
 {
+
 	position_command cmd; 
+	
+	setup();
+	
 	while(true)
 	{
 		if (s_new_command_ready)
@@ -31,7 +35,9 @@ void run_spi()
 			s_buffer_index = 0;
 			s_new_command_ready = false;
 		}
+
 		x27_service();
+		
 	}
 }
 

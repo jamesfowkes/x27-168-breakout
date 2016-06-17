@@ -21,6 +21,7 @@ void run_adc()
 	position_command cmd;
 
 	setup();
+
 	while(true)
 	{
 		if (s_new_reading_ready)
@@ -30,8 +31,10 @@ void run_adc()
 			x27_set_position(&cmd);
 			s_new_reading_ready = false;
 		}
+
+		x27_service();
+		
 	}
-	x27_service();
 }
 
 ISR(ADC_vect)

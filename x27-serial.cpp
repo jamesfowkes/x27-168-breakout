@@ -3,7 +3,7 @@
 
 #include "x27.h"
 
-static const uint16_t BAUDRATE_CONFIG_9600 = (F_CPU / (4 * 9599)) / 2;
+static const uint16_t BAUDRATE_CONFIG_9600 = (F_CPU / (4 * 9599U)) / 2;
 
 static char s_command_buffer[16];
 static int s_buffer_index = 0;
@@ -44,6 +44,7 @@ void run_serial()
 	position_command cmd;
 
 	setup();
+
 	while(true)
 	{
 		if (s_new_command_ready)
@@ -53,7 +54,9 @@ void run_serial()
 			s_buffer_index = 0;
 			s_new_command_ready = false;
 		}
+
 		x27_service();
+		
 	}
 }
 
