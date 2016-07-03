@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -41,7 +43,7 @@ static void setup()
 
 void run_serial()
 {
-	position_command cmd;
+	struct position_command cmd;
 
 	setup();
 
@@ -60,7 +62,7 @@ void run_serial()
 	}
 }
 
-ISR(USART0_RX_vect)
+ISR(USART_RX_vect)
 {
 	if (s_new_command_ready) { return; }
 
@@ -75,7 +77,7 @@ ISR(USART0_RX_vect)
 	}
 }
 
-ISR(USART0_TX_vect)
+ISR(USART_TX_vect)
 {
 
 }

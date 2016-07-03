@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+*.hex
+*.elf
+
+# Biild artifacts
+.sconsign.dblite
+
+# Project files
+*.sublime-*

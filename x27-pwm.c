@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -18,7 +20,7 @@ static void setup()
 
 void run_pwm()
 {
-	position_command cmd;
+	struct position_command cmd;
 
 	setup();
 

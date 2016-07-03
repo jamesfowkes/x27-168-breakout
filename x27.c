@@ -110,8 +110,8 @@ void x27_initialise()
 	COIL2A_DDR |= _BV(COIL2A_PIN);
 	COIL2B_DDR |= _BV(COIL2B_PIN);
 
-
-	for (int i = 0; i < 600; i++)
+	int i;
+	for (i = 0; i < 600; i++)
 	{
 		step(-1);
 	}
