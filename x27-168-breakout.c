@@ -45,7 +45,7 @@ static void signal_fault()
 	}
 }
 
-void setup()
+int main()
 {
 
 	x27_initialise();
@@ -73,9 +73,6 @@ void setup()
 
 	// If execution gets to this point, something's gone very wrong
 	signal_fault();
-}
 
-void loop()
-{
-	
+	return 0;
 }
