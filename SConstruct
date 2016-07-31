@@ -2,7 +2,7 @@ import os
 
 cppdefines = ['F_CPU=8000000UL']
 cppflags = ['-Wall', '-Wextra', '-mmcu=atmega328p', '-g', '-Os', '-ffunction-sections', '-fdata-sections']
-linker_flags = ['-Wl,--gc-sections,--print-gc-sections,--relax', '-Os']
+linker_flags = ['-Wl,--gc-sections', '-Os', '-mmcu=atmega328p']
 
 env = Environment(ENV=os.environ, CC="avr-gcc", CPPFLAGS=cppflags, CPPDEFINES=cppdefines)
 
