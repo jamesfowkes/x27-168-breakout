@@ -12,30 +12,40 @@ enum mode
 	MODE_PWM,
 	MODE_ADC
 };
+typedef enum mode MODE;
 
 static void run_dmc()
 {
 	// Mode selection is tricky
 }
 
-static int get_mode()
+static MODE get_mode()
 {
-	// Mode 0 pin is PD1
-	// Mode 1 pin is PD2
-
-	// Mode pins as input
-	DDRD &= ~(_BV(DDD1) | _BV(DDD2));
-	// with pullup
-	PORTD |= _BV(PORTD1) | _BV(PORTD2);
+	uint8_t mode = 0;
+	// Mode 0 pin is PD2
+	// Mode 1 pin is PD3
 
 	_delay_ms(30); // Let the pin voltage stabilise after turning on pullups
-	return (enum mode)( (PIND & 0x02) | (PIND & 0x04));
+	
+	mode |= _BV(PIND2) ? 1 : 0;
+	mode |= _BV(PIND3) ? 2 : 0;
+
+	return (MODE)mode;
+}
+
+static void setup_io()
+{
+	// LED pin as output
+	DDRC |= _BV(DDC2);
+
+	// Mode pins as input
+	DDRD &= ~(_BV(DDD2) | _BV(DDD3));
+	// with pullup
+	PORTD |= _BV(PORTD2) | _BV(PORTD3);
 }
 
 static void signal_fault()
 {
-	DDRC |= _BV(DDC2);
-
 	while(true)	
 	{
 		_delay_ms(200);
@@ -48,10 +58,12 @@ static void signal_fault()
 int main()
 {
 
+	setup_io();
+
 	x27_initialise();
 
-	int mode = get_mode();
-	
+	MODE mode = get_mode();
+
 	switch(mode)
 	{
 	case MODE_ADC:
