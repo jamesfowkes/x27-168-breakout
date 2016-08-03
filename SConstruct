@@ -1,6 +1,6 @@
 import os
 
-cppdefines = ['F_CPU=8000000UL']
+cppdefines = ['F_CPU=1000000UL']
 cppflags = ['-Wall', '-Wextra', '-mmcu=atmega328p', '-g', '-Os', '-ffunction-sections', '-fdata-sections']
 linker_flags = ['-Wl,--gc-sections', '-Os', '-mmcu=atmega328p']
 
