@@ -27,8 +27,8 @@ static MODE get_mode()
 
 	_delay_ms(30); // Let the pin voltage stabilise after turning on pullups
 	
-	mode |= _BV(PIND2) ? 1 : 0;
-	mode |= _BV(PIND3) ? 2 : 0;
+	mode |= (PIND & _BV(PIND2)) ? 1 : 0;
+	mode |= (PIND & _BV(PIND3)) ? 2 : 0;
 
 	return (MODE)mode;
 }
@@ -55,6 +55,19 @@ static void signal_fault()
 	}
 }
 
+static void signal_mode(MODE mode)
+{
+	int c = (int)mode + 1;
+
+	while(c--)
+	{
+		_delay_ms(200);
+		PINC |= _BV(PINC2);
+		_delay_ms(200);
+		PINC |= _BV(PINC2);
+	}
+}
+
 int main()
 {
 
@@ -63,6 +76,8 @@ int main()
 	x27_initialise();
 
 	MODE mode = get_mode();
+
+	signal_mode(mode);
 
 	switch(mode)
 	{
