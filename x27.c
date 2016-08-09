@@ -82,7 +82,7 @@ static void step(int direction)
 
 	step_no += direction;
 
-	switch(step_no & 0x02)
+	switch(step_no & 0x03)
 	{
 	case 0:
 		coil1(COIL_POL1);
