@@ -18,6 +18,7 @@ struct position_command
 void x27_initialise();
 void x27_set_position(struct position_command const * const cmd);
 void x27_service();
+void x27_test();
 
 void run_serial();
 void run_adc();

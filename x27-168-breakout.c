@@ -75,31 +75,33 @@ int main()
 
 	x27_initialise();
 
-	MODE mode = get_mode();
-
-	signal_mode(mode);
-
-	switch(mode)
-	{
-	case MODE_ADC:
-		run_adc();
-		break;
-	case MODE_SERIAL:
-		run_serial();
-		break;
-	case MODE_SPI:
-		run_spi();
-		break;
-	case MODE_PWM:
-		run_pwm();
-		break;
-	default:
-		run_dmc();
-		break;
-	}
-
-	// If execution gets to this point, something's gone very wrong
-	signal_fault();
+	x27_test();
+	
+	//MODE mode = get_mode();
+//
+	//signal_mode(mode);
+//
+	//switch(mode)
+	//{
+	//case MODE_ADC:
+	//	run_adc();
+	//	break;
+	//case MODE_SERIAL:
+	//	run_serial();
+	//	break;
+	//case MODE_SPI:
+	//	run_spi();
+	//	break;
+	//case MODE_PWM:
+	//	run_pwm();
+	//	break;
+	//default:
+	//	run_dmc();
+	//	break;
+	//}
+//
+	//// If execution gets to this point, something's gone very wrong
+	//signal_fault();
 
 	return 0;
 }
